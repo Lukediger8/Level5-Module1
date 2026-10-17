@@ -1,6 +1,11 @@
 package _02_File_Encrypt_Decrypt;
 
-public class FileDecryptor {
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileDecryptor {{
 	/*
 	 * Decryption is the process of taking encoded or encrypted text or other data
 	 * and converting it back into text that you or the computer can read and understand.
@@ -19,4 +24,27 @@ public class FileDecryptor {
 	 * Create a program that opens the file created by FileEncryptor and decrypts
 	 * the message, then display it to the user in a JOptionPane.
 	 */
+	try {
+		FileReader fr = new FileReader("src/_00_Intro_To_File_Input_and_Output/test.txt");
+		int c = fr.read();
+		while(c != -1){
+			System.out.print((char)c);
+			c = fr.read();
+		}
+		fr.close();
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	try {
+		FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/text.txt");
+		//fw.write();
+		
+		fw.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+
+	}
 }

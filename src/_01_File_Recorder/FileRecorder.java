@@ -12,7 +12,8 @@ public class FileRecorder {
 	
 	String response  = JOptionPane.showInputDialog("Enter a message that you want to be turned into a file");
 	try {
-		FileWriter fw = new FileWriter("src/_00_Intro_To_File_Input_and_Output/test2.txt", true);
+		//FileWriter fw = new FileWriter("src/_00_Intro_To_File_Input_and_Output/test2.txt", true);
+		FileWriter fw = new FileWriter("test3.txt", true);
 		
 		/*
 		NOTE: To append to a file that already exists, add true as a second parameter when calling the

@@ -1,6 +1,14 @@
 package _02_File_Encrypt_Decrypt;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+
+import javax.swing.JOptionPane;
+
 public class FileEncryptor {
+    public static void main(String[] args) {
+    	char m = 0;
 	/*
 	 * Encryption is the process of encoding a message or information
 	 * in such a way that only authorized parties can access it and
@@ -20,4 +28,43 @@ public class FileEncryptor {
 	 * Create a program that takes a message and a key from the user.
 	 * Use the key to shift each letter in the users input and save the final result to a file.
 	 */
+
+    	try {
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/encrypt"  + new Date().getSeconds() + ".txt", false);
+			String message = JOptionPane.showInputDialog("Enter a message");
+			for(int i = 0; i < message.length(); i++) {
+				m = message.charAt(i);
+				if(Character.isLowerCase(m)) {
+					m+=4;
+					if(m>122) {
+						m = (char) ((m-122)+96);
+					}
+					fw.write(m);
+				}
+				else if(Character.isUpperCase(m)) {
+					m+=4;
+					if(m>90) {
+						m = (char) ((m-90)+64);
+					}
+					fw.write(m);
+				}else {
+					fw.write(m);
+				}
+			}
+			/*
+			NOTE: To append to a file that already exists, add true as a second parameter when calling the
+			      FileWriter constructor.
+			      (e.g. FileWriter fw = new FileWriter("src/_00_Intro_To_File_Input_and_Output/test2.txt", true);)
+			*/
+			
+			
+				
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+    System.out.println(m);
+    }
+    
 }
