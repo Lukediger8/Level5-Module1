@@ -28,21 +28,23 @@ public class FileEncryptor {
 	 * Create a program that takes a message and a key from the user.
 	 * Use the key to shift each letter in the users input and save the final result to a file.
 	 */
-
+    	
     	try {
-			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/encrypt"  + new Date().getSeconds() + ".txt", false);
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/encrypt.txt", false);
 			String message = JOptionPane.showInputDialog("Enter a message");
+			String key = JOptionPane.showInputDialog("Enter a key for how much u wanna shift, less than 26");
+			int k = Integer.parseInt(key);
 			for(int i = 0; i < message.length(); i++) {
 				m = message.charAt(i);
 				if(Character.isLowerCase(m)) {
-					m+=4;
+					m+=k;
 					if(m>122) {
 						m = (char) ((m-122)+96);
 					}
 					fw.write(m);
 				}
 				else if(Character.isUpperCase(m)) {
-					m+=4;
+					m+=k;
 					if(m>90) {
 						m = (char) ((m-90)+64);
 					}

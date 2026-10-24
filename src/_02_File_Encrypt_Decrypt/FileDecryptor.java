@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileDecryptor {{
+import javax.swing.JOptionPane;
+
+public class FileDecryptor {
 	/*
 	 * Decryption is the process of taking encoded or encrypted text or other data
 	 * and converting it back into text that you or the computer can read and understand.
@@ -24,12 +26,21 @@ public class FileDecryptor {{
 	 * Create a program that opens the file created by FileEncryptor and decrypts
 	 * the message, then display it to the user in a JOptionPane.
 	 */
+    public static void main(String[] args) {
+	int c = 0;
+	String key = JOptionPane.showInputDialog("What is the key you want to use to decode the following text?");
+	int keynum = Integer.parseInt(key);
+	StringBuilder s = new StringBuilder();
 	try {
-		FileReader fr = new FileReader("src/_00_Intro_To_File_Input_and_Output/test.txt");
-		int c = fr.read();
+		FileReader fr = new FileReader("src/_02_File_Encrypt_Decrypt/encrypt.txt");
 		while(c != -1){
-			System.out.print((char)c);
+			//System.out.print((char)c);
 			c = fr.read();
+			if(c==-1){
+				break;
+			}
+			s.append((char) c);
+		
 		}
 		fr.close();
 	} catch (FileNotFoundException e) {
@@ -40,11 +51,31 @@ public class FileDecryptor {{
 	try {
 		FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/text.txt");
 		//fw.write();
-		
+		String message = s.toString();
+		for(int i = 0; i < message.length(); i++) {
+			char m = message.charAt(i);
+			if(Character.isLowerCase(m)) {
+				m-=keynum;
+				if(m<97) {
+					m = (char) (122-(97-m)+1);
+				}
+				fw.write(m);
+			}
+			else if(Character.isUpperCase(m)) {
+				m-=keynum;
+				if(m<90) {
+					m = (char) ((64-(90-m)));
+				}
+				fw.write(m);
+			}else {
+				fw.write(m);
+			}
+		}
 		fw.close();
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
 
 	}
+
 }
