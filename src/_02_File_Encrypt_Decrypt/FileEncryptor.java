@@ -1,14 +1,19 @@
 package _02_File_Encrypt_Decrypt;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class FileEncryptor {
     public static void main(String[] args) {
-    	char m = 0;
+    	JFileChooser chooser = new JFileChooser();
+    	FileReader fr;
 	/*
 	 * Encryption is the process of encoding a message or information
 	 * in such a way that only authorized parties can access it and
@@ -30,12 +35,43 @@ public class FileEncryptor {
 	 */
     	
     	try {
-			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/encrypt.txt", false);
-			String message = JOptionPane.showInputDialog("Enter a message");
+    		int result = chooser.showOpenDialog(null);
+    		if (result == JFileChooser.APPROVE_OPTION) {
+    		    File selectedFile = chooser.getSelectedFile();
+    		    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+    			fr = new FileReader(selectedFile);
+    			
+    		
+			FileWriter fw = new FileWriter(selectedFile.getAbsolutePath() + "_encrypted", false);
 			String key = JOptionPane.showInputDialog("Enter a key for how much u wanna shift, less than 26");
+			int m = fr.read();
 			int k = Integer.parseInt(key);
-			for(int i = 0; i < message.length(); i++) {
-				m = message.charAt(i);
+			while(m != -1){
+				//System.out.print((char)c);
+				//c = fr.read();
+				if(Character.isLowerCase((char) m)) {
+					m+=k;
+					if(m>122) {
+						m = (char) ((m-122)+96);
+					}
+					fw.write(m);
+				}
+				else if(Character.isUpperCase((char) m)) {
+					m+=k;
+					if(m>90) {
+						m = (char) ((m-90)+64);
+					}
+					fw.write(m);
+				}else {
+					fw.write(m);
+				}			
+				
+			m = fr.read();
+			}
+			
+			/*
+			for(int i = 0; i < selectedFile.length(); i++) {
+				m = ((CharSequence) selectedFile).charAt(i);
 				if(Character.isLowerCase(m)) {
 					m+=k;
 					if(m>122) {
@@ -53,6 +89,7 @@ public class FileEncryptor {
 					fw.write(m);
 				}
 			}
+    		
 			/*
 			NOTE: To append to a file that already exists, add true as a second parameter when calling the
 			      FileWriter constructor.
@@ -62,11 +99,13 @@ public class FileEncryptor {
 			
 				
 			fw.close();
+    		}
+    	} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-    System.out.println(m);
     }
     
 }

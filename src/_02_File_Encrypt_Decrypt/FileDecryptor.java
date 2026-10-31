@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class FileDecryptor {
@@ -28,6 +29,7 @@ public class FileDecryptor {
 	 */
     public static void main(String[] args) {
 	int c = 0;
+	JFileChooser chooser = new JFileChooser();
 	String key = JOptionPane.showInputDialog("What is the key you want to use to decode the following text?");
 	int keynum = Integer.parseInt(key);
 	StringBuilder s = new StringBuilder();
